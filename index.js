@@ -3,7 +3,7 @@ module.exports = function parseHTTP(request) {
 
   // The parts of the request are separated by spaces. I THINK this always holds true.
   const parts = request.split(" ");
-  parsed.verb = parts[0];
+  parsed.verb = parts[0].toUpperCase();
   parsed.path = parts[1];
   parsed.version = parts[2];
 
