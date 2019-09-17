@@ -8,6 +8,7 @@ describe("parses HTTP", function() {
     // Act
     const output = parseHTTP(request);
     const expected = {"verb":"GET", "path":"/", "version":"HTTP/1.1"};
+
     // Assert
     expect(output).toEqual(expected);
   });
@@ -18,8 +19,22 @@ describe("parses HTTP", function() {
     // Act
     const output = parseHTTP(request);
     const expected = {"verb":"GET", "path":"/", "version":"HTTP/1.1"};
+
     // Assert
     expect(output).toEqual(expected);
-  })
+  });
+  it("sets content-type headers", function() {
+    // Arrange
+    const request =
+    `get / HTTP/1.1
+     Content-type: text/html; charset=utf-8`;
+
+    // Act
+    const output = parseHTTP(request);
+    const expected = {"verb":"GET", "path":"/", "version":"HTTP/1.1", "headers":{"Content-type":"text/html; charset=utf-8"}};
+
+    // Assert
+    expect(output).toEqual(expected);
+  });
 
 })
