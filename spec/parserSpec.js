@@ -12,6 +12,7 @@ describe("parses HTTP", function() {
     // Assert
     expect(output).toEqual(expected);
   });
+
   it("normalizes the verb", function() {
     // Arrange
     const request = `get / HTTP/1.1`;
@@ -23,6 +24,7 @@ describe("parses HTTP", function() {
     // Assert
     expect(output).toEqual(expected);
   });
+
   it("sets content-type headers", function() {
     // Arrange
     const request =
@@ -32,6 +34,26 @@ describe("parses HTTP", function() {
     // Act
     const output = parseHTTP(request);
     const expected = {"verb":"GET", "path":"/", "version":"HTTP/1.1", "headers":{"Content-type":"text/html; charset=utf-8"}};
+
+    // Assert
+    expect(output).toEqual(expected);
+  });
+
+  it("handles multiple headers", function() {
+    // Arrange
+    const request =
+    `get / HTTP/1.1
+     Content-type: text/html; charset=utf-8
+     Accept: text/html`;
+
+    // Act
+    const output = parseHTTP(request);
+    const expected = {"verb":"GET", "path":"/", "version":"HTTP/1.1",
+      "headers":{
+        "Content-type":"text/html; charset=utf-8",
+        "Accept":"text/html"
+      }
+    };
 
     // Assert
     expect(output).toEqual(expected);
